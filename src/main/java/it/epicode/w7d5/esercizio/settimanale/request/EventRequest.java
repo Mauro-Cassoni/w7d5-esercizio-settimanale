@@ -2,6 +2,7 @@ package it.epicode.w7d5.esercizio.settimanale.request;
 
 import jakarta.validation.constraints.NotBlank;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -16,13 +17,13 @@ public class EventRequest {
     @NotBlank(message = "description request")
     private String description;
 
-    @NotBlank(message = "date request")
+    @NotNull(message = "date request")
     private LocalDate date;
 
     @NotBlank(message = "location request")
     private String location;
 
-    @NotBlank(message = "maxUser request")
+    @NotNull(message = "maxUser request")
     private int maxUser;
 
 }

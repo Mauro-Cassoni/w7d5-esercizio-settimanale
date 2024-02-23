@@ -3,6 +3,7 @@ package it.epicode.w7d5.esercizio.settimanale.controller;
 import it.epicode.w7d5.esercizio.settimanale.exception.BadRequestException;
 import it.epicode.w7d5.esercizio.settimanale.exception.CustomResponse;
 import it.epicode.w7d5.esercizio.settimanale.exception.NotFoundException;
+import it.epicode.w7d5.esercizio.settimanale.model.Event;
 import it.epicode.w7d5.esercizio.settimanale.model.User;
 import it.epicode.w7d5.esercizio.settimanale.request.UserRequest;
 import it.epicode.w7d5.esercizio.settimanale.service.UserService;

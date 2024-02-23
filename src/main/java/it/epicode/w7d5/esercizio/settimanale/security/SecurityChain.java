@@ -29,6 +29,7 @@ public class SecurityChain {
         httpSecurity.authorizeHttpRequests(request -> request.requestMatchers("/events/create").hasAnyAuthority(Role.ADMIN.name(),Role.EVENT_CREATOR.name()));
         httpSecurity.authorizeHttpRequests(request -> request.requestMatchers("/events/update/**").hasAnyAuthority(Role.ADMIN.name(),Role.EVENT_CREATOR.name()));
         httpSecurity.authorizeHttpRequests(request -> request.requestMatchers("/events/delete/**").hasAnyAuthority(Role.ADMIN.name(),Role.EVENT_CREATOR.name()));
+        httpSecurity.authorizeHttpRequests(request -> request.requestMatchers("/events/assign/**").permitAll());
         httpSecurity.authorizeHttpRequests(request -> request.requestMatchers("/events/search/**").permitAll());
 
         httpSecurity.authorizeHttpRequests(request -> request.requestMatchers("/users/create").hasAnyAuthority(Role.ADMIN.name(),Role.EVENT_CREATOR.name()));

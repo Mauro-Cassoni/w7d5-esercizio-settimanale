@@ -94,7 +94,7 @@ public class EventController {
         }
     }
 
-    @PatchMapping("/{id}/set")
+    @PatchMapping("/assign/{id}/set")
     public ResponseEntity<CustomResponse> setUser(@PathVariable int id,@RequestParam int id_user){
         try {
             Event event = eventService.setUser(id, id_user);

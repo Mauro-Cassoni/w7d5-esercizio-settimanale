@@ -18,6 +18,9 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
+    private EventService eventService;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     public Page<User> findAllUsers(Pageable pageable){
@@ -68,5 +71,12 @@ public class UserService {
 
     public void deleteUserByEmail(String email){
         userRepository.deleteByEmail(email).orElseThrow(()->new NotFoundException("Email not found"));
+    }
+
+    public void cancelPrenotation(int id, int id_event){
+        User x = getUserById(id);
+
+        x.getEvents().remove(eventService.getEventById(id_event));
+
     }
 }
