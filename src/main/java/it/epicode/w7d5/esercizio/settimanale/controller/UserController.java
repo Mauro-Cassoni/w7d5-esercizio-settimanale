@@ -26,7 +26,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("")
+    @GetMapping("/search")
     public ResponseEntity<CustomResponse> getAll(Pageable pageable) {
         try {
             return CustomResponse.success(HttpStatus.OK.toString(), userService.findAllUsers(pageable), HttpStatus.OK);
@@ -36,7 +36,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/search/{id}")
     public ResponseEntity<CustomResponse> getUserById(@PathVariable int id){
         try {
             return CustomResponse.success(HttpStatus.OK.toString(), userService.getUserById(id), HttpStatus.OK);
@@ -46,7 +46,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("")
+    @PostMapping("/create")
     public ResponseEntity<CustomResponse> saveUser(@RequestBody @Validated UserRequest userRequest, BindingResult bindingResult){
         if(bindingResult.hasErrors()) throw new BadRequestException(bindingResult.getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).toList().toString());
         if (bindingResult.hasErrors()){
@@ -60,7 +60,7 @@ public class UserController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<CustomResponse> updateUser(@PathVariable int id, @RequestBody @Validated UserRequest userRequest, BindingResult bindingResult){
         if(bindingResult.hasErrors()) throw new BadRequestException(bindingResult.getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).toList().toString());
         if(bindingResult.hasErrors()){
@@ -78,7 +78,7 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<CustomResponse> deleteUser(@PathVariable int id) {
         try{
             userService.deleteUserById(id);
@@ -90,5 +90,10 @@ public class UserController {
         catch (Exception e){
             return CustomResponse.error(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PatchMapping("/role/{email}")
+    public User changeRole(@PathVariable String email, @RequestBody String role){
+        return userService.updateRoleUser(email, role);
     }
 }

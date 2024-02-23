@@ -1,7 +1,6 @@
 package it.epicode.w7d5.esercizio.settimanale.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import it.epicode.w7d5.esercizio.settimanale.enums.Role;
+
 import it.epicode.w7d5.esercizio.settimanale.exception.OutOfRange;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -23,9 +22,9 @@ public class Event {
     private String location;
     private int maxUser;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(
-            name = "user",
+            name = "event_user",
             joinColumns = @JoinColumn(name = "event_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )

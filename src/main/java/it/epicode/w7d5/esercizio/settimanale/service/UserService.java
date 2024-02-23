@@ -37,7 +37,7 @@ public class UserService {
         User x = new User();
         x.setName(userRequest.getName());
         x.setSurname(userRequest.getSurname());
-        x.setEmail(userRequest.getMail());
+        x.setEmail(userRequest.getEmail());
         x.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         x.setRole(Role.NORMAL_USER);
 
@@ -49,7 +49,7 @@ public class UserService {
         User x = getUserById(id);
         x.setName(userRequest.getName());
         x.setSurname(userRequest.getSurname());
-        x.setEmail(userRequest.getMail());
+        x.setEmail(userRequest.getEmail());
         x.setPassword(passwordEncoder.encode(userRequest.getPassword()));
 
         return userRepository.save(x);

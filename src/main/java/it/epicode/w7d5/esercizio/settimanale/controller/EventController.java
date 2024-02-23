@@ -5,7 +5,6 @@ import it.epicode.w7d5.esercizio.settimanale.exception.CustomResponse;
 import it.epicode.w7d5.esercizio.settimanale.exception.NotFoundException;
 
 import it.epicode.w7d5.esercizio.settimanale.model.Event;
-import it.epicode.w7d5.esercizio.settimanale.model.User;
 import it.epicode.w7d5.esercizio.settimanale.request.EventRequest;
 import it.epicode.w7d5.esercizio.settimanale.service.EventService;
 import it.epicode.w7d5.esercizio.settimanale.service.UserService;
@@ -14,12 +13,13 @@ import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/dispositivo")
+@RequestMapping("/events")
 public class EventController {
     
     @Autowired
@@ -28,7 +28,7 @@ public class EventController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("")
+    @GetMapping("/search")
     public ResponseEntity<CustomResponse> getAllEvents(Pageable pageable) {
         try {
             return CustomResponse.success(HttpStatus.OK.toString(), eventService.getAllEvent(pageable), HttpStatus.OK);
@@ -38,7 +38,7 @@ public class EventController {
         }
     }
     
-    @GetMapping("/{id}")
+    @GetMapping("/search/{id}")
     public ResponseEntity<CustomResponse> getEventById(@PathVariable int id){
         try {
             return CustomResponse.success(HttpStatus.OK.toString(), eventService.getEventById(id), HttpStatus.OK);
@@ -48,7 +48,7 @@ public class EventController {
         }
     }
 
-    @PostMapping("")
+    @PostMapping("/create")
     public ResponseEntity<CustomResponse> saveEvent(@RequestBody @Validated EventRequest eventRequest, BindingResult bindingResult){
         if(bindingResult.hasErrors()) throw new BadRequestException(bindingResult.getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).toList().toString());
         if (bindingResult.hasErrors()){
@@ -62,7 +62,7 @@ public class EventController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<CustomResponse> updateEvent(@PathVariable int id, @RequestBody @Validated EventRequest eventRequest, BindingResult bindingResult){
         if(bindingResult.hasErrors()) throw new BadRequestException(bindingResult.getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).toList().toString());
         if(bindingResult.hasErrors()){
@@ -80,7 +80,7 @@ public class EventController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<CustomResponse> deleteEvent(@PathVariable int id) {
         try{
             eventService.deleteEvent(id);
@@ -105,11 +105,5 @@ public class EventController {
             return CustomResponse.error(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-    @PatchMapping("/{email}")
-    public User changeRole(@PathVariable String email, @RequestBody String role){
-        return userService.updateRoleUser(email, role);
-    }
-
 
 }
